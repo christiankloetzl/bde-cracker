@@ -1,19 +1,11 @@
+"""Main module from the bde-cracker package.
+
+Can be used as application or package.
+"""
+
 import subprocess
-import ctypes
-
-
-# Disable the System32/SysWOW64 file system redirection.
-class disable_file_system_redirection:
-    _disable = ctypes.windll.kernel32.Wow64DisableWow64FsRedirection
-    _revert = ctypes.windll.kernel32.Wow64RevertWow64FsRedirection
-
-    def __enter__(self):
-        self.old_value = ctypes.c_long()
-        self.success = self._disable(ctypes.byref(self.old_value))
-
-    def __exit__(self, type, value, traceback):
-        if self.success:
-            self._revert(self.old_value)
+# My packages:
+import utility.filesystem
 
 
 if __name__ == "__main__":
@@ -22,7 +14,7 @@ if __name__ == "__main__":
     command_pattern = "C:\\Windows\\System32\\manage-bde.exe -unlock -recoverypassword {0} " + bit_locker_drive
     numeric_plain_recovery_key = 0
 
-    with disable_file_system_redirection():
+    with utility.filesystem.DisableFileSystemRedirection():
         while drive_is_encrypted is not True:
             # Build the recovery key
             pw = str(numeric_plain_recovery_key).zfill(48)
@@ -51,5 +43,13 @@ if __name__ == "__main__":
     #process = subprocess.Popen((path), shell=True, stdout=subprocess.PIPE)
     #process.wait()
     #print(process.returncode)
+    
+    your_list = 'abcdefghijklmnopqrstuvwxyz'
+complete_list = []
+for current in xrange(10):
+    a = [i for i in your_list]
+    for y in xrange(current):
+        a = [x+i for i in your_list for x in a]
+    complete_list = complete_list+a
 
 """
