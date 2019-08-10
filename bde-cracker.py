@@ -27,6 +27,7 @@ if __name__ == "__main__":
             if process.returncode == 0:
                 drive_is_encrypted = True
                 print(recovery_key)
+            numeric_plain_recovery_key += 1
 
 
 # Code snippets
