@@ -14,7 +14,7 @@ class DisableFileSystemRedirection:
         self.old_value = ctypes.c_long()
         self.success = self._disable(ctypes.byref(self.old_value))
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, exc_type, value, traceback):
         """Enable the windows file system redirection after the with statement."""
         if self.success:
             self._revert(self.old_value)
