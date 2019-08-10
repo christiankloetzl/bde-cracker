@@ -1,2 +1,2 @@
 # bde-cracker
-Brute forces bit locker drives
+Brute forces BitLocker drives
