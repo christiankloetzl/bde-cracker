@@ -4,12 +4,10 @@ import subprocess
 import utility.static
 
 
-def simple_brute_force(drive):
+def simple_brute_force():
     """Brute forces a BitLocker drive with a simple brute force mechanism."""
     drive_is_encrypted = True
     numeric_plain_recovery_key = 0
-    # Add the drive letter to the command_pattern.
-    utility.static.command_pattern += drive
     # Start the brute force attack.
     while drive_is_encrypted:
         # Build the recovery key
@@ -22,7 +20,7 @@ def simple_brute_force(drive):
         numeric_plain_recovery_key += 1
 
 
-def random_brute_force(drive):
+def random_brute_force():
     pass
 
 

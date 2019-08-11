@@ -28,7 +28,9 @@ def start(drive_letter, cracking_method):
 
     # Start with disabling the System32/SysWOW64 file system redirection.
     with utility.filesystem.DisableFileSystemRedirection():
-        cracking_method_function(drive_letter)
+        # Add the drive letter to the command_pattern.
+        utility.static.command_pattern += drive_letter
+        cracking_method_function()
 
 
 if __name__ == "__main__":
