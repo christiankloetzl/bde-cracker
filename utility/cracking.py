@@ -1,4 +1,5 @@
 """Provides different password cracking methods."""
+import random
 import subprocess
 # My packages:
 import utility.static
@@ -11,7 +12,7 @@ def simple_brute_force():
     # Start the brute force attack.
     while drive_is_encrypted:
         # Build the recovery key
-        recovery_key = make_recovery_key_from_int(numeric_plain_recovery_key)
+        recovery_key = make_recovery_key(str(numeric_plain_recovery_key).zfill(48))
         # Try the recovery_key
         recovery_key_works = try_recovery_key(recovery_key)
         if recovery_key_works:
@@ -21,7 +22,21 @@ def simple_brute_force():
 
 
 def random_brute_force():
-    pass
+    """Brute forces a BitLocker drive with random recovery keys."""
+    drive_is_encrypted = True
+    # Minimum and maximum length of the numeric recovery key.
+    minimum_length_of_recovery_key = 100000000000000000000000000000000000000000000000
+    maximum_length_of_recovery_key = 999999999999999999999999999999999999999999999999
+    # Start the brute force attack.
+    while drive_is_encrypted:
+        # Build the recovery key
+        numeric_recovery_key = random.randint(minimum_length_of_recovery_key, maximum_length_of_recovery_key)
+        recovery_key = make_recovery_key(str(numeric_recovery_key))
+        # Try the recovery_key
+        recovery_key_works = try_recovery_key(recovery_key)
+        if recovery_key_works:
+            drive_is_encrypted = False
+            print(recovery_key)
 
 
 def try_recovery_key(recovery_key):
@@ -35,9 +50,9 @@ def try_recovery_key(recovery_key):
         return False
 
 
-def make_recovery_key_from_int(numeric_recovery_key):
+def make_recovery_key(numeric_recovery_key):
     """Builds a BitLocker recovery key from a integer value."""
-    rc = str(numeric_recovery_key).zfill(48)
+    rc = numeric_recovery_key
     recovery_key = rc[0:6] + '-' + rc[6:12] + '-' + rc[12:18] + '-' + rc[18:24] + '-' + rc[24:30] + '-' + rc[30:36] +\
         '-' + rc[36:42] + '-' + rc[42:48]
     return recovery_key
