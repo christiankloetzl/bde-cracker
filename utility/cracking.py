@@ -23,6 +23,8 @@ def simple_brute_force():
 
 def random_brute_force():
     """Brute forces a BitLocker drive with random recovery keys."""
+    processes = []
+    process_count = 100
     drive_is_encrypted = True
     # Minimum and maximum length of the numeric recovery key.
     minimum_length_of_recovery_key = 100000000000000000000000000000000000000000000000
@@ -32,11 +34,17 @@ def random_brute_force():
         # Build the recovery key
         numeric_recovery_key = random.randint(minimum_length_of_recovery_key, maximum_length_of_recovery_key)
         recovery_key = make_recovery_key(str(numeric_recovery_key))
-        # Try the recovery_key
-        recovery_key_works = try_recovery_key(recovery_key)
-        if recovery_key_works:
-            drive_is_encrypted = False
-            print(recovery_key)
+        # Start the processes.
+        for _ in range(0, process_count):
+            command = utility.static.command_pattern.format(recovery_key)
+            process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+            processes.append(process)
+        # Wait for all processes.
+        for process in processes:
+            process.wait()
+            if process.returncode == 0 and drive_is_encrypted is True:
+                drive_is_encrypted = False
+                print(process.args.split()[-2])
 
 
 def try_recovery_key(recovery_key):
