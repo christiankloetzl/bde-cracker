@@ -42,6 +42,9 @@ def random_brute_force():
         # Wait for all processes.
         for process in processes:
             process.wait()
+            # Close file descriptors.
+            process.stdout.close()
+            process.stderr.close()
             if process.returncode == 0 and drive_is_encrypted is True:
                 drive_is_encrypted = False
                 print(process.args.split()[-2])
