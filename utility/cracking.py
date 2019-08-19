@@ -37,7 +37,7 @@ def random_brute_force():
         # Start the processes.
         for _ in range(0, process_count):
             command = utility.static.command_pattern.format(recovery_key)
-            process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, close_fds=True)
+            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
             processes.append(process)
         # Wait for all processes.
         for process in processes:
