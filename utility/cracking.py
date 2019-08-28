@@ -1,4 +1,5 @@
 """Provides different password cracking methods."""
+import gc
 import random
 import subprocess
 # My packages:
@@ -52,6 +53,7 @@ def random_brute_force():
             if process.returncode == 0 and drive_is_encrypted is True:
                 drive_is_encrypted = False
                 print(process.args.split()[-2])
+        gc.collect()
 
 
 def try_recovery_key(recovery_key):
