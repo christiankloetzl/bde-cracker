@@ -1,4 +1,4 @@
-"""Provides different password cracking methods."""
+"""Provides different password recovery methods."""
 import gc
 import random
 import subprocess
@@ -6,8 +6,8 @@ import subprocess
 import utility.static
 
 
-def simple_brute_force():
-    """Brute forces a BitLocker drive with a simple brute force mechanism."""
+def simple_recovery():
+    """Recovers a BitLocker drive with a simple brute force mechanism."""
     drive_is_encrypted = True
     numeric_plain_recovery_key = 0
     # Start the brute force attack.
@@ -23,7 +23,7 @@ def simple_brute_force():
 
 
 def random_brute_force():
-    """Brute forces a BitLocker drive with random recovery keys."""
+    """Recovers a BitLocker drive with random recovery keys."""
     processes = []
     process_count = 100
     drive_is_encrypted = True

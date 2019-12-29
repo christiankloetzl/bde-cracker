@@ -1,3 +1,3 @@
-"""General utilities for the bde-cracker application."""
+"""General utilities for the bde-recovery application."""
 
-__all__ = ["filesystem", "cracking", "static"]
+__all__ = ["filesystem", "recovery", "static"]
